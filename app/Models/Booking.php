@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Booking extends Model
 {
+
     use HasFactory;
 
     protected $fillable = [
@@ -17,4 +18,9 @@ class Booking extends Model
         'price',
         'payment_method',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }    
 }

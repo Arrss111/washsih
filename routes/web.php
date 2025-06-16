@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\AdminController;
+use App\Http\Middleware\IsAdmin;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,3 +40,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/available-times', [BookingController::class, 'availableTimes']);
 });
 
+Route::middleware(['auth', IsAdmin::class])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/bookings', [AdminController::class, 'bookings'])->name('admin.bookings');
+});
